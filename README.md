@@ -1,5 +1,5 @@
-FTP Exit Extension for Maximo
-=============================
+Extended Endpoint Support for for Maximo Integration Framework
+==============================================================
 
 This module enables Maximo Integration Framework export (Publish Channel/Invocation Channel) to external FTP (FTPS) server.
 
