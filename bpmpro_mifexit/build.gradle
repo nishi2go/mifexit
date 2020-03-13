@@ -1,0 +1,179 @@
+plugins {
+    id "de.undercouch.download" version "4.0.4"
+}
+
+allprojects {
+  java.util.Properties props = new Properties()
+  File propFile = new File(rootProject.rootDir, 'addon.properties')
+  if (propFile.exists()) {
+    props.load(propFile.newInputStream())
+  }
+
+  project.ext {
+    maximoInstallDir = props.getProperty("maximo_home", "/temp")
+    addOnId = props.getProperty("addon_id", 'notset')
+    addOnPackage = props.getProperty("addon_package", 'notset')
+    addOnVersion = props.getProperty("addon_version", '1.0.0.0')
+    addOnBuildNumber = props.getProperty("addon_build", '1')
+    maximoExternalDir = new File(project.ext.maximoInstallDir, (projectDir.canonicalPath - rootDir.canonicalPath))
+    println "Maximo External Dir for${project.name} is ${maximoExternalDir}"
+  }
+
+  group = "${project.ext.addOnPackage}"
+  version = "${project.ext.addOnVersion}"
+}
+
+subprojects {
+  apply plugin: 'eclipse'
+
+  plugins.withType(JavaPlugin) {
+    sourceCompatibility = 1.7
+    targetCompatibility = 1.7
+    compileJava.options.debugOptions.debugLevel = 'source,lines,vars'
+    jar.enabled = false
+    def classes = new File(maximoExternalDir, 'classes')
+    def webClasses = new File(maximoExternalDir, 'webmodule/WEB-INF/classes')
+    sourceSets {
+      main.java.srcDir 'src'
+      main.resources.srcDir 'src'
+      if (classes.exists()) {
+        main.output.classesDir 'classes'
+        main.output.resourcesDir 'classes'
+      }
+      if (webClasses.exists()) {
+        main.output.classesDir 'webmodule/WEB-INF/classes/'
+        main.output.resourcesDir 'webmodule/WEB-INF/classes/'
+      }
+      test.java.srcDir 'test'
+    }
+
+    dependencies {
+      // ensure that we can pick up the Maxmio core classes during compile
+      if (classes.exists())
+        compile files(classes)
+      if (webClasses.exists())
+        compile files(webClasses)
+    }
+
+    task javadocZip(type: Zip, dependsOn: javadoc) {
+      baseName = "${rootProject.name}_${project.name}"
+      classifier = 'javadoc'
+      from javadoc.destinationDir
+    }
+
+    clean.doLast {
+      println "deleting ${sourceSets.main.output.classesDir}"
+      project.delete(sourceSets.main.output.classesDir)
+      project.delete('bin')
+      project.delete('.settings')
+    }
+  }
+}
+
+project(':businessobjects') {
+  apply plugin: 'java'
+
+  repositories {
+      mavenCentral() 
+  }
+
+  dependencies {
+    compile fileTree(dir: new File(maximoInstallDir, "applications/maximo/lib/").path, includes: ['*.jar'])
+    compile ("commons-net:commons-net:3.6")
+    testCompile ('org.mockftpserver:MockFtpServer:2.7.1')
+  }
+
+  task copyDeps(type: Copy) {
+      from configurations.testCompile
+      into "lib/" 
+  }
+}
+
+project(':maximouiweb') {
+  apply plugin: 'java'
+
+  dependencies {
+    compile project(':businessobjects')
+  }
+}
+
+project(':lib') {
+task downloadFile {
+    doLast {
+        download {
+            src 'https://repo.maven.apache.org/maven2/commons-net/commons-net/3.6/commons-net-3.6.jar'
+            dest buildDir
+            overwrite true
+        }
+    }
+}
+
+}
+
+project(':tools') {
+  apply plugin: 'java'
+
+  dependencies {
+    compile project(":businessobjects")
+  }
+}
+
+project(':properties') {
+  task devPublish(type: Copy) {
+    File destDir = maximoExternalDir
+    if (!destDir.exists()) {
+      println "Maximo Install Dir does not exist, aborting"
+      return
+    }
+
+    from(projectDir) {
+      exclude '.project', '.classpath', 'bin/**', '.settings/**', 'src/**', '**/*.in'
+    }
+    into maximoExternalDir
+    includeEmptyDirs = false
+    eachFile { println "Copied: ${it} to ${maximoExternalDir}" }
+  }
+}
+
+project(':resources') {
+}
+
+task distZip(type: Zip) {
+  baseName = "${project.name}"
+  classifier = 'addon'
+  destinationDir(file("build/dist/"))
+
+  from ("applications") {
+    exclude '**/*.in'
+    exclude '**/.project'
+    exclude '**/.classpath'
+    exclude '**/.settings'
+    exclude '**/build/'
+    exclude '**/src/'
+    exclude '**/test/'
+    exclude '**/bin/'
+    into "applications"
+  }
+
+  from ("tools") {
+    exclude '**/*.in'
+    exclude '**/.project'
+    exclude '**/.classpath'
+    exclude '**/.settings'
+    exclude '**/build/'
+    exclude '**/src/'
+    exclude '**/bin/'
+    into "tools"
+  }
+
+  from ("resources") {
+    exclude '**/*.in'
+    exclude '**/.project'
+    exclude '**/.classpath'
+    exclude '**/.settings'
+    exclude '**/build/'
+    exclude '**/src/'
+    exclude '**/bin/'
+    into "resources"
+  }
+}
