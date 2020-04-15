@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script scriptname="V1000_01" author="nishi2go@gmail.com">
+	<description>Add FTP End point definition</description>
+	<statements>
+		<insert table="MAXHANDLER" ignore_duplicates="true">
+			<insertrow>
+				<columnvalue column="HANDLERNAME" string="FTP" />
+				<columnvalue column="HANDLERCLASSNAME" string="com.tumblr.maximopro.iface.router.FTPHandler" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="USERDEFINED" boolean="true" />
+				<columnvalue column="USEWITH" string="INTEGRATION" />
+			</insertrow>
+		</insert>
+		<insert table="MAXENDPOINT" ignore_duplicates="true">
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="HANDLERNAME" string="FTP" />
+				<columnvalue column="DESCRIPTION" string="FTP Endpoint" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="LANGCODE" string="EN" />
+				<columnvalue column="HASLD" boolean="false" />
+			</insertrow>
+		</insert>
+		<insert table="MAXENDPOINTDTL" ignore_duplicates="true">
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="FILEDIR" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="TIMEOUT" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="ACTIVE" />
+				<columnvalue column="VALUE" string="0" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="HOSTNAME" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="PORT" />
+				<columnvalue column="VALUE" string="21" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="PASSWORD" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="BUFFERSIZE" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="NOTCPDELAY" />
+				<columnvalue column="value" string="1" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+			<insertrow>
+				<columnvalue column="ENDPOINTNAME" string="BPMPRFTP" />
+				<columnvalue column="PROPERTY" string="USERNAME" />
+				<columnvalue column="CHANGEBY" string="MAXADMIN" />
+				<columnvalue column="CHANGEDATE" date="sysdate" />
+				<columnvalue column="ALLOWOVERRIDE" boolean="false" />
+			</insertrow>
+		</insert>
+	</statements>
+</script>

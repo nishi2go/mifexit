@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE script SYSTEM "script.dtd">
+<script scriptname="V1000_02" author="nishi2go@gmail.com">
+	<description>Add MifEpAttachmentStorage property</description>
+	<statements>
+		<add_property name="mxe.bpmpro.attachmentstorage.endpoint" scope="global" 
+		 live_refresh="false" maxtype="ALN" secure_level="private"
+		  description="A endpoint name for MIF Endpoint-based Attachment Storage." />
+	</statements>
+</script>

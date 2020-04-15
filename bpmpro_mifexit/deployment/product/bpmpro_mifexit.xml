@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<product name="bpmpro_mifexit">
+<targetupdate>
+	<targetname>init</targetname>
+	<content>
+		<update>
+		    <property name="maximo.businessobjectsclasspath" value="lib/oro-2.0.8.jar lib/smbj-0.10.0.jar lib/bcprov-jdk15on-1.60.jar lib/mbassador-1.3.0.jar lib/asn-one-0.4.0.jar" /> 
+		</update>
+    </content>
+</targetupdate>
+</product>

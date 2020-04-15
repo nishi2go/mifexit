@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<product>
+  <name>Integration Framework Endpoint Collection</name>
+  <description>Maximo Integration Framework Endpoint Collection</description>
+  <version>
+    <major>1</major>
+    <minor>0</minor>
+    <modlevel>0</modlevel>
+    <patch>0</patch>
+    <build>{{build_number}}</build>
+  </version>
+  <dbmaxvarname>bpmpro_mifexit</dbmaxvarname>
+  <dbscripts>bpmpro_mifexit</dbscripts>
+  <dbversion>{{dbversion}}</dbversion>
+  <checklicense></checklicense>
+  <lastdbversion>V1000-00</lastdbversion>
+  <extensions>
+    <!-- place object extensions here -->
+  </extensions>
+</product>
